@@ -262,4 +262,94 @@ def ana_menu():
 if __name__ == "__main__":
     ana_menu()
 
+# Customer management system data structure (dictionary)
+customer_database = {}
 
+# Function to add a new customer
+def add_customer():
+    print("\nAdd New Customer")
+    customer_id = input("Enter Customer ID: ")
+    if customer_id in customer_database:
+        print("Customer ID already exists. Please try again.")
+        return
+    name = input("Enter Name: ")
+    surname = input("Enter Surname: ")
+    email = input("Enter Email: ")
+    phone_number = input("Enter Phone Number: ")
+    customer_database[customer_id] = {"Name": name, "Surname": surname, "Email": email, "Phone Number": phone_number}
+    print("Customer added successfully.")
+
+# Function to update customer information
+def update_customer():
+    print("\nUpdate Customer Information")
+    customer_id = input("Enter Customer ID to update: ")
+    if customer_id not in customer_database:
+        print("Customer ID not found.")
+        return
+    print("Current Information:")
+    print("Name:", customer_database[customer_id]["Name"])
+    print("Surname:", customer_database[customer_id]["Surname"])
+    print("Email:", customer_database[customer_id]["Email"])
+    print("Phone Number:", customer_database[customer_id]["Phone Number"])
+    name = input("Enter New Name (Press Enter to keep the current value): ")
+    surname = input("Enter New Surname (Press Enter to keep the current value): ")
+    email = input("Enter New Email (Press Enter to keep the current value): ")
+    phone_number = input("Enter New Phone Number (Press Enter to keep the current value): ")
+    if name:
+        customer_database[customer_id]["Name"] = name
+    if surname:
+        customer_database[customer_id]["Surname"] = surname
+    if email:
+        customer_database[customer_id]["Email"] = email
+    if phone_number:
+        customer_database[customer_id]["Phone Number"] = phone_number
+    print("Customer information updated successfully.")
+
+# Function to delete a customer
+def delete_customer():
+    print("\nDelete Customer")
+    customer_id = input("Enter Customer ID to delete: ")
+    if customer_id not in customer_database:
+        print("Customer ID not found.")
+        return
+    del customer_database[customer_id]
+    print("Customer deleted successfully.")
+
+# Function to list all customers
+def list_customers():
+    print("\nList of Customers")
+    if not customer_database:
+        print("No customers found.")
+        return
+    for customer_id, customer_info in customer_database.items():
+        print("Customer ID:", customer_id)
+        for key, value in customer_info.items():
+            print(f"{key}: {value}")
+        print()
+
+# Main function
+def main():
+    while True:
+        print("\nCustomer Management System")
+        print("1. Add New Customer")
+        print("2. Update Customer Information")
+        print("3. Delete Customer")
+        print("4. List All Customers")
+        print("5. Exit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            add_customer()
+        elif choice == "2":
+            update_customer()
+        elif choice == "3":
+            delete_customer()
+        elif choice == "4":
+            list_customers()
+        elif choice == "5":
+            print("Exiting the program...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
