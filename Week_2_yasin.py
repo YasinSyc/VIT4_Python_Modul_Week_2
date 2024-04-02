@@ -262,6 +262,143 @@ def ana_menu():
 if __name__ == "__main__":
     ana_menu()
 
+# Student information stored in a dictionary
+students = {
+    "Ahmet Yilmaz": [85, 90, 78],
+    "Mehmet Demir": [92, 88, 76],
+    "Ayse Kaya": [85, 90, 95],
+    "Yusuf Sert": [55, 85, 72],
+    "Eymen Sahin": [62, 80, 75],
+    "Omer Yildiz": [65, 91, 92],
+    "Kerem Yildirim": [82, 87, 76],
+    "Hamza Ozturk": [42, 55, 67],
+    "Ahmet Aydin": [65, 68, 71],
+    "Ali Ozdemir": [70, 80, 90]
+}
+
+#1 Calculating each student's GPA and adding it to the dictionary
+for student, grades in students.items():
+    gpa = sum(grades) / len(grades)
+    students[student].append(round(gpa,2))
+
+#2 Finding and printing the information of the student with the highest GPA
+highest_gpa_student = max(students.items(), key=lambda x: x[1][-1])
+print("Student with the highest GPA:")
+print("Name:", highest_gpa_student[0])
+print("Grades:", highest_gpa_student[1][:-1])  # Exclude GPA from grades
+print("GPA:", highest_gpa_student[1][-1])
+
+#3 Separating each student's name from their surname and storing them in a separate tuple and adding them to a list
+names_surnames = [student.split() for student in students]
+
+#4 Sorting the names in alphabetical order and printing the sorted list
+names_surnames.sort()
+print("\nNames sorted in alphabetical order:")
+for name, surname in names_surnames:
+    print(name, surname)
+
+#5 Keeping and printing the students with a GPA below 70 in a set
+gpa_below_70_students = {student for student, grades in students.items() if grades[-1] < 70}
+print("\nStudents with a GPA below 70:")
+for student in gpa_below_70_students:
+    print(student)
+    
+# Movie library data structure (dictionary)
+movie_library = {}
+
+# Adding a movie
+def add_movie():
+    name = input("Movie name: ")
+    director = input("Director: ")
+    year = input("Release year: ")
+    genre = input("Genre: ")
+    movie_library[name] = {"Director": director, "Release Year": year, "Genre": genre}
+    print(f"{name} added to the library.")
+
+# Editing a movie
+def edit_movie(name):
+    if name in movie_library:
+        print(f"Current details for {name}:")
+        print(f"Director: {movie_library[name]['Director']}")
+        print(f"Release Year: {movie_library[name]['Release Year']}")
+        print(f"Genre: {movie_library[name]['Genre']}")
+        option = input("What would you like to change? (Director/Release Year/Genre): ").capitalize()
+        new_info = input(f"Enter new {option}: ")
+        movie_library[name][option] = new_info
+        print(f"{name} successfully updated.")
+    else:
+        print("Movie not found in the library.")
+
+# Deleting a movie
+def delete_movie(name):
+    if name in movie_library:
+        del movie_library[name]
+        print(f"{name} deleted from the library.")
+    else:
+        print("Movie not found in the library.")
+
+# Displaying collection
+def display_collection():
+    if movie_library:
+        print("\nMovie Collection:")
+        for movie, details in movie_library.items():
+            print(f"{movie}:")
+            for key, value in details.items():
+                print(f"{key}: {value}")
+            print()
+    else:
+        print("The movie library is empty.")
+
+# Saving a movie
+def save_data():
+    with open("movie_library.txt", "w") as file:
+        for movie, details in movie_library.items():
+            file.write(f"{movie},{details['Director']},{details['Release Year']},{details['Genre']}\n")
+    print("Movie library data saved.")
+
+# Loading movie data
+def load_data():
+    try:
+        with open("movie_library.txt", "r") as file:
+            for line in file:
+                movie, director, year, genre = line.strip().split(",")
+                movie_library[movie] = {"Director": director, "Release Year": year, "Genre": genre}
+        print("Movie library data loaded.")
+    except FileNotFoundError:
+        print("No existing movie library data found.")
+
+# Main menu
+def main():
+    load_data()
+    while True:
+        print("\nMovie Library Management System")
+        print("1. Add Movie")
+        print("2. Edit Movie")
+        print("3. Delete Movie")
+        print("4. Display Collection")
+        print("5. Save Data")
+        print("6. Exit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            add_movie()
+        elif choice == "2":
+            name = input("Enter the name of the movie to edit: ")
+            edit_movie(name)
+        elif choice == "3":
+            name = input("Enter the name of the movie to delete: ")
+            delete_movie(name)
+        elif choice == "4":
+            display_collection()
+        elif choice == "5":
+            save_data()
+        elif choice == "6":
+            print("Exiting the program...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
 # Customer management system data structure (dictionary)
 customer_database = {}
 
